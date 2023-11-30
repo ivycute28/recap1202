@@ -34,4 +34,24 @@ nrow(subdat)
 
 PlotOnStaticMap(MyMap, lat = subdat$最小統計區中心點Y, lon = subdat$最小統計區中心點X, pch = 19, col = "red", cex = 1)
 
+dat[,1] = as.Date(dat[,1])
+subdat = dat[dat[,1] <= as.Date("2015-09-30") & dat[,1] >= as.Date("2015-09-01") & dat[,6] == "台南市",]
+nrow(subdat)
 
+PlotOnStaticMap(MyMap, lat = subdat$最小統計區中心點Y, lon = subdat$最小統計區中心點X, pch = 19, col = "red", cex = 1)
+
+
+x1 <- subdat$最小統計區中心點Y
+x2 <- subdat$最小統計區中心點X
+df <- data.frame(x1,x2)
+
+## Use densCols() output to get density at each point
+x <- densCols(x1,x2, colramp=colorRampPalette(c("black", "white")))
+df$dens <- col2rgb(x)[1,] + 1L
+
+## Map densities to colors
+cols <-  colorRampPalette(c("#000099", "#00FEFF", "#45FE4F", 
+                            "#FCFF00", "#FF9400", "#FF3100"))(256)
+df$col <- cols[df$dens]
+
+PlotOnStaticMap(MyMap, lat = df$x1, lon = df$x2, pch = 19, col = df$col, cex = 1.5)
