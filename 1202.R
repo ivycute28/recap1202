@@ -27,3 +27,11 @@ PlotOnStaticMap(MyMap)
 MyMap2 = GetMap(center = center, zoom = zoom, maptype = "satellite", API_console_key = 'AIzaSyA4DVFtF70aXE7RgrXViy2z5Ku2pMkVxFI')
 
 PlotOnStaticMap(MyMap2)
+
+dat[,1] = as.Date(dat[,1])
+subdat = dat[dat[,1] <= as.Date("2015-09-30") & dat[,1] >= as.Date("2015-09-01") & dat[,6] == "台南市",]
+nrow(subdat)
+
+PlotOnStaticMap(MyMap, lat = subdat$最小統計區中心點Y, lon = subdat$最小統計區中心點X, pch = 19, col = "red", cex = 1)
+
+
